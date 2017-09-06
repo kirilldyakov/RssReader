@@ -1,31 +1,31 @@
 
 package ru.strongit.rssreader.realm.model;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Guid {
+public class Guid extends RealmObject{
 
 
-    private Boolean mIsPermaLink;
+    private Boolean isPermaLink;
 
     @PrimaryKey
-    private String mTextValue;
+    private String textValue;
 
-    public Boolean getIsPermaLink() {
-        return mIsPermaLink;
+    public Boolean getPermaLink() {
+        return isPermaLink;
     }
 
-    public void setIsPermaLink(Boolean isPermaLink) {
-        mIsPermaLink = isPermaLink;
+    public void setPermaLink(Boolean permaLink) {
+        isPermaLink = permaLink;
     }
 
     public String getTextValue() {
-        return mTextValue;
+        return textValue;
     }
 
     public void setTextValue(String textValue) {
-        mTextValue = textValue;
+        this.textValue = textValue;
     }
-
 }

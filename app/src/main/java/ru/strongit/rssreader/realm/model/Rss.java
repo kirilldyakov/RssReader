@@ -1,31 +1,31 @@
+
 package ru.strongit.rssreader.realm.model;
 
-import javax.annotation.Generated;
-
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
+
 public class Rss extends RealmObject{
 
-    private Channel mChannel;
 
-    private Double mVersion;
+    private Channel channel;
+
+    @PrimaryKey
+    private String version;
 
     public Channel getChannel() {
-        return mChannel;
+        return channel;
     }
 
     public void setChannel(Channel channel) {
-        mChannel = channel;
+        this.channel = channel;
     }
 
-    public Double getVersion() {
-        return mVersion;
+    public String getVersion() {
+        return version;
     }
 
-    public void setVersion(Double version) {
-        mVersion = version;
+    public void setVersion(String version) {
+        this.version = version;
     }
-
 }

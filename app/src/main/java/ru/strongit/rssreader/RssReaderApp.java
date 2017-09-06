@@ -40,6 +40,7 @@ public class RssReaderApp extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
+                .directory(context.getExternalFilesDir(null))
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 
@@ -53,11 +54,14 @@ public class RssReaderApp extends Application {
 //            //No Realm file to remove.
 //        }
 
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        //.enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
+        if (BuildConfig.DEBUG) {
+            Stetho.initialize(
+                    Stetho.newInitializerBuilder(this)
+                            .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                            .build()
+            );
+        }
 
 
     }

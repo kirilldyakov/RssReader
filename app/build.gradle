@@ -62,5 +62,8 @@ dependencies {
 
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+
+    debugCompile 'com.facebook.stetho:stetho:1.5.0'
+
     testCompile 'junit:junit:4.12'
 }

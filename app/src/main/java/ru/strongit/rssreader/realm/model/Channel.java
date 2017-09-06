@@ -1,105 +1,103 @@
 
 package ru.strongit.rssreader.realm.model;
 
-import javax.annotation.Generated;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
+
 public class Channel extends RealmObject {
 
+    private String description;
+
+    private String docs;
+
+    private String generator;
+
+    private RealmList<Item> item;
+
+    private String language;
+
+    private String lastBuildDate;
+
+    @Ignore
+    private RealmList<Link> link;
+
     @PrimaryKey
-    private String mDescription;
+    private String title;
 
-    private String mDocs;
-
-    private String mGenerator;
-
-    private RealmList<Item> mItem;
-
-    private String mLanguage;
-
-    private String mLastBuildDate;
-
-    private RealmList<Link> mLink;
-
-    private String mTitle;
-
-    private String mTtl;
+    private String ttl;
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public void setDescription(String description) {
-        mDescription = description;
+        this.description = description;
     }
 
     public String getDocs() {
-        return mDocs;
+        return docs;
     }
 
     public void setDocs(String docs) {
-        mDocs = docs;
+        this.docs = docs;
     }
 
     public String getGenerator() {
-        return mGenerator;
+        return generator;
     }
 
     public void setGenerator(String generator) {
-        mGenerator = generator;
+        this.generator = generator;
     }
 
     public RealmList<Item> getItem() {
-        return mItem;
+        return item;
     }
 
     public void setItem(RealmList<Item> item) {
-        mItem = item;
+        this.item = item;
     }
 
     public String getLanguage() {
-        return mLanguage;
+        return language;
     }
 
     public void setLanguage(String language) {
-        mLanguage = language;
+        this.language = language;
     }
 
     public String getLastBuildDate() {
-        return mLastBuildDate;
+        return lastBuildDate;
     }
 
     public void setLastBuildDate(String lastBuildDate) {
-        mLastBuildDate = lastBuildDate;
+        this.lastBuildDate = lastBuildDate;
     }
 
     public RealmList<Link> getLink() {
-        return mLink;
+        return link;
     }
 
     public void setLink(RealmList<Link> link) {
-        mLink = link;
+        this.link = link;
     }
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public void setTitle(String title) {
-        mTitle = title;
+        this.title = title;
     }
 
     public String getTtl() {
-        return mTtl;
+        return ttl;
     }
 
     public void setTtl(String ttl) {
-        mTtl = ttl;
+        this.ttl = ttl;
     }
-
 }

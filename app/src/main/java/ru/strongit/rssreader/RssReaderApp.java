@@ -40,7 +40,7 @@ public class RssReaderApp extends Application {
         RealmConfiguration realmConfiguration = new RealmConfiguration
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
-                .directory(context.getExternalFilesDir(null))
+//               .directory(context.getExternalFilesDir(null))
                 .build();
         Realm.setDefaultConfiguration(realmConfiguration);
 

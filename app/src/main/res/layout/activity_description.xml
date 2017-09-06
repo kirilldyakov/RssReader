@@ -5,8 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ru.strongit.rssreader.ui.descriptionActivity.DescriptionActivity">
-<TextView
-    android:id="@+id/tvDescription"
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    >
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/btnLink"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="подробнее"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnLink"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tvFullText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="9999"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -11,7 +11,7 @@ import ru.strongit.rssreader.ui.descriptionActivity.DescriptionActivity;
 import ru.strongit.rssreader.ui.mainActivity.MainActivity;
 
 import static ru.strongit.rssreader.RssReaderApp.getAppContext;
-import static ru.strongit.rssreader.common.Constants.ITEM_ID_KEY;
+import static ru.strongit.rssreader.common.Constants.ITEM_GUID_KEY;
 
 
 /**
@@ -47,7 +47,7 @@ public abstract class BasePresenter {
 
         Bundle bundle = new Bundle();
 
-        bundle.putString(ITEM_ID_KEY, itemID);
+        bundle.putString(ITEM_GUID_KEY, itemID);
 
         intent.putExtras(bundle);
 

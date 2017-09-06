@@ -13,9 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:configChanges="orientation|keyboardHidden"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.mainActivity.MainActivity">
+        <activity
+            android:name=".ui.mainActivity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,6 +32,7 @@
         <activity
             android:name=".ui.descriptionActivity.DescriptionActivity"
             android:label="@string/title_activity_description"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ui.mainActivity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

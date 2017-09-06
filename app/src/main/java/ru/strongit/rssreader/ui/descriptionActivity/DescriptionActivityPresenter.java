@@ -1,17 +1,14 @@
 package ru.strongit.rssreader.ui.descriptionActivity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.text.Html;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import ru.strongit.rssreader.common.BasePresenter;
 import ru.strongit.rssreader.realm.model.Item;
 
-import static ru.strongit.rssreader.common.Constants.ITEM_ID_KEY;
-
-/**
- * Created by user on 05.09.17.
- */
+import static ru.strongit.rssreader.common.Constants.ITEM_GUID_KEY;
 
 
 public class DescriptionActivityPresenter extends BasePresenter {
@@ -27,44 +24,45 @@ public class DescriptionActivityPresenter extends BasePresenter {
         getDataFromIntent();
 
         getItemFromRealm();
+
+        bindItem();
+    }
+
+    private void bindItem() {
+
+        view().setTitle(item.getTitle());
+
+        view().tvFullText.setText(Html.fromHtml(item.getFullText()));
+        //view().tvLink.setText(item.getLink());
+    }
+
+    void getDataFromIntent() {
+
+        Intent intent = view.getIntent();
+
+        this.item_guid = intent.getStringExtra(ITEM_GUID_KEY);
+
     }
 
     private void getItemFromRealm() {
 
-
         if (item_guid == null) return;
-
 
         Realm realm = Realm.getDefaultInstance();
 
-
-
-
-
-
-
-        RealmResults<Item> result23 = realm.where(Item.class)
-//                .equalTo("name", "John")
-//                .or()
-//                .equalTo("name", "Peter")
-                .findAll();
-
-
         try {
             //Item item = realm.where(Item.class).equalTo("mGuid", this.item_guid).findFirst();
-            RealmResults<Item> result2 = realm.where(Item.class)
-                    .equalTo("mGuid", "2336017101")//"item_guid")
-                    .findAll();
-
             Item res = realm.where(Item.class)
-                    .equalTo("mGuid", "2336017101")//"item_guid")
+                    .equalTo("guid.textValue", "2336017101")//"item_guid")
                     .findFirst();
-            Item item = res;
-
-            String title = res.getTitle();
-            String guid = res.getGuid().getTextValue();
-            String description = res.getDescription();
-            String link = res.getLink();
+            //Неправольныый подход
+            item = new Item();
+            item.setTitle(res.getTitle());
+            item.setEnclosure(res.getEnclosure());
+            item.setDescription(res.getDescription());
+            item.setLink(res.getLink());
+            item.setFullText(res.getFullText());
+            item.setPubDate(res.getPubDate());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,11 +72,11 @@ public class DescriptionActivityPresenter extends BasePresenter {
 
     }
 
-    void getDataFromIntent() {
 
-        Intent intent = view.getIntent();
-
-        this.item_guid = intent.getStringExtra(ITEM_ID_KEY);
-
+    public void www() {
+        String url = item.getLink();
+        Uri uriUrl = Uri.parse(url);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        view().startActivity(launchBrowser);
     }
 }

@@ -1,6 +1,7 @@
 package ru.strongit.rssreader.realm.commands;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -12,6 +13,7 @@ import ru.strongit.rssreader.common.RetrofitHelper;
 import ru.strongit.rssreader.model.rssModel.Rss;
 import ru.strongit.rssreader.realm.model.Item;
 
+import static ru.strongit.rssreader.RssReaderApp.getAppContext;
 import static ru.strongit.rssreader.common.SoundUtils.beep;
 
 /**
@@ -51,11 +53,13 @@ public class ReamlCommands {
 //                ru.strongit.rssreader.realm.model.Rss rRss = new ru.strongit.rssreader.realm.model.Rss();
 //                rRss.setVersion(Double.valueOf(rss.getVersion().toString()));
 //                rRss.
-               // storeRssToRealm(rss);
+                // storeRssToRealm(rss);
+
+
                 storeRssToRealm2(json);
 
+                showToastItemsCount();
 
-                Log.d(TAG, "onResponse: ");
                 beep();
             }
 
@@ -65,6 +69,22 @@ public class ReamlCommands {
                 beep();
             }
         });
+    }
+
+    private static void showToastItemsCount() {
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            long cnt = realm.where(Item.class).count();
+
+            Toast.makeText(getAppContext(), "Количество записей в БД: " + cnt, Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        } finally {
+            realm.close();
+        }
     }
 
     private static void storeRssToRealm2(String json) {
@@ -98,7 +118,7 @@ public class ReamlCommands {
 
             itm.setPubDate(rss.getChannel().getItem().get(i).getPubDate());
 
-            itm.setTitle(rss.getChannel().getItem().get(i).getTitle().getCdataSection());
+            itm.setTitle(rss.getChannel().getItem().get(i).getTitle());
 
 
             //realm.insertOrUpdate(itm);

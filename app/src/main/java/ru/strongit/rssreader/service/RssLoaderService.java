@@ -11,9 +11,6 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import io.realm.Realm;
-import ru.strongit.rssreader.realm.model.Item;
-
 import static ru.strongit.rssreader.RssReaderApp.getAppContext;
 import static ru.strongit.rssreader.realm.commands.ReamlCommands.getNewRssNews;
 
@@ -39,7 +36,7 @@ public class RssLoaderService extends Service {
 
             @Override
             public void run() {
-
+                getNewRssNews();
             }
         }, 1*60*1000);
 
@@ -80,9 +77,6 @@ public class RssLoaderService extends Service {
 
                     mHandler.post(new Runnable() {
                         public void run() {
-                            Realm realm = Realm.getDefaultInstance();
-
-                            Toast.makeText(context, "DISPLAY YOUR MESSAGE"+ realm.where(Item.class).count(), Toast.LENGTH_SHORT).show();
                             getNewRssNews();
                         }
                     });

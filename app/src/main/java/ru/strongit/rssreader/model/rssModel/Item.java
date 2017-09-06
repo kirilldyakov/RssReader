@@ -22,7 +22,8 @@ public class Item {
         Guid guid;
 
         @Element(name="title", required=false)
-        Title title;
+        //Title title;
+        String title;
 
         @Element(name="category", required=false)
         String category;
@@ -50,9 +51,12 @@ public class Item {
 
         public Guid getGuid() {return this.guid;}
         public void setGuid(Guid value) {this.guid = value;}
-
-        public Title getTitle() {return this.title;}
-        public void setTitle(Title value) {this.title = value;}
+//
+//        public Title getTitle() {return this.title;}
+//        public void setTitle(Title value) {this.title = value;}
+//
+        public String getTitle() {return this.title;}
+        public void setTitle(String value) {this.title = value;}
 
         public String getCategory() {return this.category;}
         public void setCategory(String value) {this.category = value;}

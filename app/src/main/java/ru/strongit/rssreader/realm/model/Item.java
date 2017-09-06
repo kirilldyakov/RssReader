@@ -1,86 +1,91 @@
 
 package ru.strongit.rssreader.realm.model;
 
-import javax.annotation.Generated;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
-public class Item extends RealmObject {
+
+public class Item extends RealmObject{
 
 
-    private String mCategory;
+    private String category;
 
-    private String mDescription;
+    private String description;
 
-//    private Enclosure mEnclosure;
+    private Enclosure enclosure;
+
+    private String fullText;
+
+    private Guid guid;
 
     @PrimaryKey
-    private String mGuid;
+    private String link;
 
-    private String mLink;
+    private String pubDate;
 
-    private String mPubDate;
+    private String title;
 
-    private String mTitle;
-
-    private String mImageURl;
-
-    public String getmCategory() {
-        return mCategory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setmCategory(String mCategory) {
-        this.mCategory = mCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getmDescription() {
-        return mDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setmDescription(String mDescription) {
-        this.mDescription = mDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getmGuid() {
-        return mGuid;
+    public Enclosure getEnclosure() {
+        return enclosure;
     }
 
-    public void setmGuid(String mGuid) {
-        this.mGuid = mGuid;
+    public void setEnclosure(Enclosure enclosure) {
+        this.enclosure = enclosure;
     }
 
-    public String getmLink() {
-        return mLink;
+    public String getFullText() {
+        return fullText;
     }
 
-    public void setmLink(String mLink) {
-        this.mLink = mLink;
+    public void setFullText(String fullText) {
+        this.fullText = fullText;
     }
 
-    public String getmPubDate() {
-        return mPubDate;
+    public Guid getGuid() {
+        return guid;
     }
 
-    public void setmPubDate(String mPubDate) {
-        this.mPubDate = mPubDate;
+    public void setGuid(Guid guid) {
+        this.guid = guid;
     }
 
-    public String getmTitle() {
-        return mTitle;
+    public String getLink() {
+        return link;
     }
 
-    public void setmTitle(String mTitle) {
-        this.mTitle = mTitle;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public String getmImageURl() {
-        return mImageURl;
+    public String getPubDate() {
+        return pubDate;
     }
 
-    public void setmImageURl(String mImageURl) {
-        this.mImageURl = mImageURl;
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

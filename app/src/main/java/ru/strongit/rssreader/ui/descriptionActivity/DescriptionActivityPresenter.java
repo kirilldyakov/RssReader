@@ -61,10 +61,10 @@ public class DescriptionActivityPresenter extends BasePresenter {
                     .findFirst();
             Item item = res;
 
-            String title = res.getmTitle();
-            String guid = res.getmGuid();
-            String description = res.getmDescription();
-            String link = res.getmLink();
+            String title = res.getTitle();
+            String guid = res.getGuid().getTextValue();
+            String description = res.getDescription();
+            String link = res.getLink();
 
         } catch (Exception e) {
             e.printStackTrace();

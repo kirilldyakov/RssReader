@@ -20,7 +20,7 @@ import static ru.strongit.rssreader.common.SoundUtils.beep;
 
 public class ReamlCommands {
 
-    private static String TAG ="TAG";
+    private static String TAG = "TAG";
 
     public static void getNewRssNews() {
         RetrofitHelper.getRssRTFT().getPolitics().enqueue(new Callback<Rss>() {
@@ -30,7 +30,7 @@ public class ReamlCommands {
 
 
                 Gson gson = new Gson();
-                String json = gson.toJson(rss);
+                String json = gson.toJson(rss.getChannel());
 
 
 //                try {
@@ -51,7 +51,8 @@ public class ReamlCommands {
 //                ru.strongit.rssreader.realm.model.Rss rRss = new ru.strongit.rssreader.realm.model.Rss();
 //                rRss.setVersion(Double.valueOf(rss.getVersion().toString()));
 //                rRss.
-                storeRssToRealm(rss);
+               // storeRssToRealm(rss);
+                storeRssToRealm2(json);
 
 
                 Log.d(TAG, "onResponse: ");
@@ -66,6 +67,20 @@ public class ReamlCommands {
         });
     }
 
+    private static void storeRssToRealm2(String json) {
+
+        Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.beginTransaction();
+            realm.createOrUpdateObjectFromJson(ru.strongit.rssreader.realm.model.Channel.class, json);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            realm.close();
+        }
+    }
+
     private static void storeRssToRealm(Rss rss) {
         Realm realm = Realm.getDefaultInstance();
 
@@ -76,17 +91,15 @@ public class ReamlCommands {
 
             Item itm = new Item();
 
-            itm.setmGuid(rss.getChannel().getItem().get(i).getGuid().getTextValue());
 
-            itm.setmDescription(rss.getChannel().getItem().get(i).getDescription().getCdataSection());
+            itm.setDescription(rss.getChannel().getItem().get(i).getDescription());
 
-            itm.setmLink(rss.getChannel().getItem().get(i).getLink());
+            itm.setLink(rss.getChannel().getItem().get(i).getLink());
 
-            itm.setmPubDate(rss.getChannel().getItem().get(i).getPubDate());
+            itm.setPubDate(rss.getChannel().getItem().get(i).getPubDate());
 
-            itm.setmTitle(rss.getChannel().getItem().get(i).getTitle().getCdataSection());
+            itm.setTitle(rss.getChannel().getItem().get(i).getTitle().getCdataSection());
 
-            itm.setmImageURl(String.valueOf(rss.getChannel().getItem().get(i).getEnclosure().getUrl()));
 
             //realm.insertOrUpdate(itm);
             realm.copyToRealmOrUpdate(itm);

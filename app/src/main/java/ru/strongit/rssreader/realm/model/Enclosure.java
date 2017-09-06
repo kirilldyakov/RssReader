@@ -1,45 +1,40 @@
 
 package ru.strongit.rssreader.realm.model;
 
-import javax.annotation.Generated;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-@Generated("net.hexar.json2pojo")
-@SuppressWarnings("unused")
-public class Enclosure extends RealmObject {
 
+public class Enclosure extends RealmObject{
 
-    private Long mLength;
+    private Long length;
 
-    private String mType;
+    private String type;
 
     @PrimaryKey
-    private String mUrl;
+    private String url;
 
     public Long getLength() {
-        return mLength;
+        return length;
     }
 
     public void setLength(Long length) {
-        mLength = length;
+        this.length = length;
     }
 
     public String getType() {
-        return mType;
+        return type;
     }
 
     public void setType(String type) {
-        mType = type;
+        this.type = type;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public void setUrl(String url) {
-        mUrl = url;
+        this.url = url;
     }
-
 }

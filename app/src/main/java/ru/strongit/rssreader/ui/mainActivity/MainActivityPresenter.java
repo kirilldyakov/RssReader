@@ -61,9 +61,9 @@ public class MainActivityPresenter extends BasePresenter {
         String title = "Новости";
         Realm realm = Realm.getDefaultInstance();
         try{
-            Channel ch = realm.where(Channel.class).findFirst();
+            Channel channel = realm.where(Channel.class).findFirst();
 
-            title = ch.getTitle();
+            title = channel.getTitle();
         }
         catch (Exception e){}
         finally {

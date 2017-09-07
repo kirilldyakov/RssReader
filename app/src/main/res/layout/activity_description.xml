@@ -8,6 +8,8 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     >
 
     <Button
@@ -18,13 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="подробнее"
+        android:layout_marginBottom="8dp"
+
         />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btnLink"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"

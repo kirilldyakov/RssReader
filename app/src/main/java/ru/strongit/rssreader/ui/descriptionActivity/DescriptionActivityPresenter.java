@@ -53,7 +53,7 @@ public class DescriptionActivityPresenter extends BasePresenter {
         try {
             //Item item = realm.where(Item.class).equalTo("mGuid", this.item_guid).findFirst();
             Item res = realm.where(Item.class)
-                    .equalTo("guid.textValue", "2336017101")//"item_guid")
+                    .equalTo("guid.textValue", item_guid)//"item_guid")
                     .findFirst();
             //Неправольныый подход
             item = new Item();

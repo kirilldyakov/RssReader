@@ -19,6 +19,12 @@ public class DescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
+        initView();
+
+
+    }
+
+    private void initView() {
         tvFullText = (TextView) findViewById(R.id.tvFullText);
 
         btnLink = (Button) findViewById(R.id.btnLink);
@@ -28,8 +34,6 @@ public class DescriptionActivity extends AppCompatActivity {
                 presenter.www();
             }
         });
-
-
     }
 
     @Override

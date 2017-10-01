@@ -1,5 +1,5 @@
 
-package ru.strongit.rssreader.realm.model;
+package ru.strongit.rssreader.dataBase.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

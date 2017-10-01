@@ -23,13 +23,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <android.support.v7.widget.RecyclerView
+                <ru.strongit.rssreader.common.RecyclerViewEmptySupport
                     android:id="@+id/recNews"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1" />
+                <TextView android:id="@+id/list_empty"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18sp"
+                    android:text="НОВОСТИ ОТСУТСТВУЮТ"
+                    />
 
-                </android.support.v7.widget.RecyclerView>
+
             </android.support.v4.widget.SwipeRefreshLayout>
             <ScrollView
                 android:layout_marginLeft="8dp"
@@ -37,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
             <TextView
-                android:id="@+id/tvFullTextSmall"
+                android:id="@+id/tv_full_text_small"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                  />

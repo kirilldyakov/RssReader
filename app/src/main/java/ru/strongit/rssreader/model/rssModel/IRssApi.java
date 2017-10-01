@@ -13,14 +13,7 @@ import retrofit2.http.GET;
  */
 public interface IRssApi {
 
-
-
-
-//    //Возвращает название местности по коордиатам
-//    @GET("/api/c7409bebc12a3b47/conditions/forecast10day/q/{latitude},{longitude}.json")
-//    Call<Shops> getForcast(@Path("latitude") String latitude, @Path("longitude") String longitude);
-
-    //Возвращает информацию о магазинах
+    //Возвращает Rss ленту Аргументов и Фактов
     @GET("/rss/politics.php")
     Call<Rss> getPolitics();
 

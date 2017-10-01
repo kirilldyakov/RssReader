@@ -2,6 +2,7 @@ package ru.strongit.rssreader;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +14,33 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import ru.strongit.rssreader.realm.model.Item;
+import io.realm.RealmChangeListener;
+import ru.strongit.rssreader.dataBase.model.Item;
+
+import static ru.strongit.rssreader.dataBase.DataBase.getItemsCount;
 
 
 /**
  * Created by user on 03.07.17.
  */
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> implements RealmChangeListener {
+
+    @Override
+    public void onChange(Object o) {
+
+        Log.d("TAG", "onChange: "+getItemsCount());
+
+    }
 
     public interface OnItemClickListener {
         void onItemClick(Item item);
     }
 
-
     private Context mContext;
+
     private List<Item> ItemsList;
+
     private final OnItemClickListener listener;
 
 

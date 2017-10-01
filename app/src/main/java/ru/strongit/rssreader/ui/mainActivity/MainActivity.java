@@ -1,33 +1,56 @@
 package ru.strongit.rssreader.ui.mainActivity;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.OrientationEventListener;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import ru.strongit.rssreader.ItemAdapter;
 import ru.strongit.rssreader.R;
+import ru.strongit.rssreader.common.RecyclerViewEmptySupport;
+import ru.strongit.rssreader.dataBase.model.Item;
+import ru.strongit.rssreader.service.RssLoaderService;
 
 import static ru.strongit.rssreader.RssReaderApp.getAppContext;
 
-public class MainActivity extends AppCompatActivity {
-    private String TAG = "TAG";
+public class MainActivity extends AppCompatActivity implements IMainActivity, SwipeRefreshLayout.OnRefreshListener {
 
-    private MainActivityPresenter presenter;
+    private IMainActivityPresenter presenter;
 
-    protected RecyclerView recItems;
+    RecyclerViewEmptySupport recNews;
 
-    protected SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    protected TextView tvDescription;
+    TextView tvDescription;
+
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (presenter == null) {
+
+            presenter = new MainActivityPresenter(this);
+
+            presenter.init();
+        }
+    }
 
 
-    private OrientationEventListener orientationListener;
-
-    Button btn1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,59 +60,109 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
-
     private void initViews() {
 
-        tvDescription = (TextView) findViewById(R.id.tvFullTextSmall);
-
-        recItems = (RecyclerView) findViewById(R.id.recNews);
+        recNews = (RecyclerViewEmptySupport) findViewById(R.id.recNews);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getAppContext());
 
-        recItems.setLayoutManager(mLayoutManager);
+        recNews.setLayoutManager(mLayoutManager);
+
+        recNews.setEmptyView(findViewById(R.id.list_empty));
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
 
-                presenter.startRefreshing();
-
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(this);
 
     }
 
     @Override
     protected void onPostResume() {
+
         super.onPostResume();
-        presenter.defineOrientation(getResources().getConfiguration().orientation);
+
+        //presenter.defineOrientation(getResources().getConfiguration().orientation);
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if(presenter== null) {presenter = new MainActivityPresenter();
+    public void setNewsTitle(String title) {
+        setTitle(title);
+    }
 
-            presenter.attachView(this);
+    @Override
+    public void setNewsText(String description) {
 
-            presenter.init();
+        tvDescription = (TextView) findViewById(R.id.tv_full_text_small);
+
+        tvDescription.setText(description);
+
+    }
+
+    @Override
+    public void showProgress() {
+
+        this.swipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideProgress() {
+
+        this.swipeRefreshLayout.setRefreshing(false);
+
+    }
+
+    @Override
+    public void onRefresh() {
+        presenter.startNewsLoading();
+    }
+
+    @Override
+    public void bindData(List<Item> items, ItemAdapter.OnItemClickListener listener) {
+
+        try {
+
+            ItemAdapter adapter = new ItemAdapter(getAppContext(), items, listener);
+
+            recNews.setAdapter(adapter);
+
+            recNews.setItemAnimator(new DefaultItemAnimator());
+
+            recNews.setAdapter(adapter);
+
+            adapter.notifyDataSetChanged();
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
         }
     }
 
-//не работает.
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        presenter.redrawScreen(newConfig);
-//    }
+    @Override
+    public void startLoadService() {
 
+        Intent intent = new Intent(getAppContext(), RssLoaderService.class);
 
-
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        startService(intent);
 
     }
 
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachView();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d("TAG", "onConfigurationChanged: 167"+newConfig.toString());
+    }
 }

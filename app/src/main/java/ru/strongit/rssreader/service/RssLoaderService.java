@@ -6,41 +6,55 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static ru.strongit.rssreader.RssReaderApp.getAppContext;
-import static ru.strongit.rssreader.realm.commands.ReamlCommands.getNewRssNews;
+import static ru.strongit.rssreader.network.NetLoader.loadRssNewsFromWWW;
 
 
 public class RssLoaderService extends Service {
+    String TAG = "TAG";
+
     Timer timer = new Timer();
-    TimerTask loadNewRss = new CustomTimerTask(getAppContext());
+
+    TimerTask loadRssTimerTask = new CustomTimerTask(getAppContext());
 
     @Override
     public void onCreate() {
+
+        Log.d(TAG, "onCreate: " + "Запущен сервис");
+
         super.onCreate();
 
-        Toast.makeText(this, "Service Started",  Toast.LENGTH_SHORT).show();
+        int timer_delay = 10;
 
-        timer.scheduleAtFixedRate(loadNewRss, 0, 10*60*1000);
+        long timer_period = 10 * 60 * 1000;
+
+        timer.scheduleAtFixedRate(loadRssTimerTask, timer_delay, timer_period);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        long handlerRunDelay = 1 * 60 * 1000; // 1 раз в минуту
+
         Handler handler = new Handler();
+
         handler.postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                getNewRssNews();
-            }
-        }, 1*60*1000);
 
-        // If we get killed, after returning from here, restart
+                loadRssNewsFromWWW();
+
+            }
+
+        }, handlerRunDelay);
+
+        // сервис будет перезапущен после того, как был убит системой
         return START_STICKY;
     }
 
@@ -48,8 +62,6 @@ public class RssLoaderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-
     }
 
     @Nullable
@@ -58,26 +70,24 @@ public class RssLoaderService extends Service {
         return null;
     }
 
+    //Выплнение задачи по таймеру
     private class CustomTimerTask extends TimerTask {
-        private Context context;
-        private Handler mHandler = new Handler();
 
+        Context context;
+
+        Handler mHandler = new Handler();
 
         public CustomTimerTask(Context con) {
             this.context = con;
         }
 
-
-
         @Override
         public void run() {
             new Thread(new Runnable() {
-
                 public void run() {
-
                     mHandler.post(new Runnable() {
                         public void run() {
-                            getNewRssNews();
+                            loadRssNewsFromWWW();
                         }
                     });
                 }

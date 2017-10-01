@@ -32,7 +32,7 @@ public class Item {
         String pubDate;
 
 //        public FullText getFullText() {return this.fullText;}
-//        public void setFullText(FullText value) {this.fullText = value;}
+//        public void fillFullText(FullText value) {this.fullText = value;}
 
         public String getFullText() {return this.fullText;}
         public void setFullText(String value) {this.fullText = value;}
@@ -53,7 +53,7 @@ public class Item {
         public void setGuid(Guid value) {this.guid = value;}
 //
 //        public Title getTitle() {return this.title;}
-//        public void setTitle(Title value) {this.title = value;}
+//        public void fillTitle(Title value) {this.title = value;}
 //
         public String getTitle() {return this.title;}
         public void setTitle(String value) {this.title = value;}

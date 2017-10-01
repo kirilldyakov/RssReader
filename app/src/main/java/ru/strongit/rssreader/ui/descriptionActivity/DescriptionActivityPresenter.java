@@ -5,21 +5,22 @@ import android.net.Uri;
 import android.text.Html;
 
 import io.realm.Realm;
-import ru.strongit.rssreader.common.BasePresenter;
-import ru.strongit.rssreader.realm.model.Item;
+import ru.strongit.rssreader.dataBase.model.Item;
 
 import static ru.strongit.rssreader.common.Constants.ITEM_GUID_KEY;
 
 
-public class DescriptionActivityPresenter extends BasePresenter {
-    String item_guid;
-    Item item;
+public class DescriptionActivityPresenter {
+    private String item_guid;
+    private Item item;
 
-    private DescriptionActivity view() {
-        return (DescriptionActivity) view;
+    protected IDescriptionActivity view;
+
+    protected DescriptionActivityPresenter(DescriptionActivity view) {
+        this.view = view;
     }
 
-    public void init() {
+    void init() {
 
         getDataFromIntent();
 
@@ -30,13 +31,14 @@ public class DescriptionActivityPresenter extends BasePresenter {
 
     private void bindItem() {
 
-        view().setTitle(item.getTitle());
+        view.fillTitle(item.getTitle());
 
-        view().tvFullText.setText(Html.fromHtml(item.getFullText()));
+        view.fillFullText(Html.fromHtml(item.getFullText()));
+
         //view().tvLink.setText(item.getLink());
     }
 
-    void getDataFromIntent() {
+    private void getDataFromIntent() {
 
         Intent intent = view.getIntent();
 
@@ -51,32 +53,35 @@ public class DescriptionActivityPresenter extends BasePresenter {
         Realm realm = Realm.getDefaultInstance();
 
         try {
-            //Item item = realm.where(Item.class).equalTo("mGuid", this.item_guid).findFirst();
+
             Item res = realm.where(Item.class)
-                    .equalTo("guid.textValue", item_guid)//"item_guid")
+                    .equalTo("guid.textValue", item_guid)
                     .findFirst();
-            //Неправольныый подход
-            item = new Item();
-            item.setTitle(res.getTitle());
-            item.setEnclosure(res.getEnclosure());
-            item.setDescription(res.getDescription());
-            item.setLink(res.getLink());
-            item.setFullText(res.getFullText());
-            item.setPubDate(res.getPubDate());
+
+            item = realm.copyFromRealm(res);
 
         } catch (Exception e) {
+
             e.printStackTrace();
+
         } finally {
+
             realm.close();
+
         }
 
     }
 
 
-    public void www() {
+    void openWWWurl() {
+
         String url = item.getLink();
+
         Uri uriUrl = Uri.parse(url);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-        view().startActivity(launchBrowser);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, uriUrl);
+
+        view.startWWW(intent);
+
     }
 }

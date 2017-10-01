@@ -18,7 +18,7 @@
 
         <activity
             android:name=".ui.mainActivity.MainActivity"
-            android:configChanges="orientation|keyboardHidden"
+
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

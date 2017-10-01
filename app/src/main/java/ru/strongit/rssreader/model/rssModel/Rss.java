@@ -17,6 +17,7 @@ public class Rss {
     public void setChannel(Channel value) {this.channel = value;}
 
     public Double getVersion() {return this.version;}
+
     public void setVersion(Double value) {this.version = value;}
 
     public static class FullText {
@@ -28,19 +29,6 @@ public class Rss {
         public void setCdataSection(String value) {this.cdataSection = value;}
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
